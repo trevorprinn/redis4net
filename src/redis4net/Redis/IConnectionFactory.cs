@@ -13,8 +13,9 @@ namespace redis4net.Redis
 		private readonly int _failedConnectionRetryTimeoutInSeconds;
 		private readonly string _listName;
 		private readonly IConnection _connection;
+        private readonly int _database;
 
-		public ConnectionFactory(IConnection connection, string hostName, int portNumber, int failedConnectionRetryTimeoutInSeconds, string listName)
+		public ConnectionFactory(IConnection connection, string hostName, int portNumber, int failedConnectionRetryTimeoutInSeconds, string listName, int database)
 		{
 			_connection = connection;
 
@@ -22,6 +23,7 @@ namespace redis4net.Redis
 			_portNumber = portNumber;
 			_failedConnectionRetryTimeoutInSeconds = failedConnectionRetryTimeoutInSeconds;
 			_listName = listName;
+            _database = database;
 		}
 
 		public IConnection GetConnection()
@@ -60,7 +62,7 @@ namespace redis4net.Redis
 		{
 			if (!_connection.IsOpen())
 			{
-				_connection.Open(_hostname, _portNumber, _listName);
+				_connection.Open(_hostname, _portNumber, _listName, _database);
 			}
 		}
 	}

@@ -9,12 +9,14 @@ namespace redis4net.Redis
 	{
 		private string _listName;
 		private ConnectionMultiplexer redis;
+        private int _database;
 
-		public void Open(string hostname, int port, string listName)
+		public void Open(string hostname, int port, string listName, int database)
 		{
 			try
 			{
 				_listName = listName;
+                _database = database;
 				redis = ConnectionMultiplexer.Connect(string.Format("{0}:{1}", hostname, port));
 			}
 			catch
@@ -30,7 +32,7 @@ namespace redis4net.Redis
 
 		public Task<long> AddToList(string content)
 		{
-			var database = redis.GetDatabase();
+			var database = redis.GetDatabase(_database);
 			return database.ListRightPushAsync(_listName, new RedisValue[] { content });
 		}
 

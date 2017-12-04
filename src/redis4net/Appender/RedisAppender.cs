@@ -12,6 +12,7 @@ namespace redis4net.Appender
 		public string RemoteAddress { get; set; }
 		public int RemotePort { get; set; }
 		public string ListName { get; set; }
+        public int Database { get; set; } = 0;
 
 		public override void ActivateOptions()
 		{
@@ -23,7 +24,7 @@ namespace redis4net.Appender
 		protected virtual void InitializeConnectionFactory()
 		{
 			var connection = new Connection();
-			ConnectionFactory = new ConnectionFactory(connection, RemoteAddress, RemotePort, 1, ListName);
+			ConnectionFactory = new ConnectionFactory(connection, RemoteAddress, RemotePort, 1, ListName, Database);
 		}
 
 		protected override void Append(log4net.Core.LoggingEvent loggingEvent)
