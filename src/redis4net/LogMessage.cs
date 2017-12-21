@@ -114,24 +114,21 @@ namespace redis4net
 			}
 		}
 
-		public DateTime TimeStamp
+		public DateTime? Timestamp
 		{
 			get
 			{
-				if (!this.ContainsKey("timestamp"))
-					return DateTime.MinValue;
+                if (!this.ContainsKey("timestamp"))
+                    return null;
 
-				var val = this["timestamp"];
-				double value;
-				var parsed = double.TryParse(val as string, NumberStyles.Any, CultureInfo.InvariantCulture, out value);
-				return parsed ? value.FromUnixTimestamp() : DateTime.MinValue;
+                return (DateTime)this["timestamp"];
 			}
 			set
 			{
-				if (!this.ContainsKey("timestamp"))
-					this.Add("timestamp", value.ToUnixTimestamp().ToString(CultureInfo.InvariantCulture));
-				else
-					this["timestamp"] = value.ToUnixTimestamp().ToString(CultureInfo.InvariantCulture);
+                if (!this.ContainsKey("timestamp"))
+                    this.Add("timestamp", value);
+                else
+                    this["timestamp"] = value;
 			}
 		}
 	}

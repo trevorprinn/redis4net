@@ -135,7 +135,7 @@ namespace redis4net.Layout
 			{
 				Host = Environment.MachineName,
 				SysLogLevel = GetSyslogSeverity(loggingEvent.Level),
-				TimeStamp = loggingEvent.TimeStamp,
+				Timestamp = loggingEvent.TimeStamp,
 			};
 
 			message.Add("LoggerName", loggingEvent.LoggerName);
